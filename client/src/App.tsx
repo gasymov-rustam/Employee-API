@@ -1,3 +1,14 @@
+import { ConfigProvider, theme } from 'antd';
+import { BrowserRouter } from './providers';
+
 export const App = () => {
-  return <div>Hello</div>;
+  return (
+    <ConfigProvider
+      theme={{
+        algorithm: theme.darkAlgorithm,
+      }}
+    >
+      <BrowserRouter />
+    </ConfigProvider>
+  );
 };
