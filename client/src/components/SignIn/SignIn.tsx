@@ -1,39 +1,43 @@
 import { Card, Form, Row, Space, Typography } from 'antd';
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Button } from '../Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { Paths } from '../../shared';
+import { Paths, isErrorWithMessage } from '../../shared';
 import { PasswordInput } from '../PasswordInput';
 import { Input } from '../Input';
 import { Error } from '../Error';
+import { UserData, useLoginMutation } from '../../app/services/auth';
+import { useAppSelector } from '../../app/hooks';
+import { getCurrentUser } from '../../features/auth/authSlice';
 
-interface LoginProps {}
-
-export const SignIn = memo((props: LoginProps) => {
+export const SignIn = memo(() => {
   const navigate = useNavigate();
   const [error, setError] = useState('');
-  // const user = useSelector(selectUser);
-  // const [loginUser, loginUserResult] = useLoginMutation();
+  const user = useAppSelector(getCurrentUser);
+  const [loginUser, loginUserResult] = useLoginMutation();
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate("/");
-  //   }
-  // }, [user, navigate]);
+  const login = async (data: UserData) => {
+    try {
+      await loginUser(data).unwrap();
 
-  const login = async (data: any /* UserData */) => {
-    // try {
-    //   await loginUser(data).unwrap();
-    //   navigate("/");
-    // } catch (err) {
-    //   const maybeError = isErrorWithMessage(err);
-    //   if (maybeError) {
-    //     setError(err.data.message);
-    //   } else {
-    //     setError("Неизвестная ошибка");
-    //   }
-    // }
+      if (loginUserResult.isSuccess) {
+        setError('');
+      }
+      // navigate('/');
+    } catch (err) {
+      const maybeError = isErrorWithMessage(err);
+
+      if (maybeError) {
+        setError(err.data.message);
+      }
+    }
   };
+
+  useEffect(() => {
+    if (user) {
+      // navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <Row align='middle' justify='center'>
@@ -42,11 +46,7 @@ export const SignIn = memo((props: LoginProps) => {
           <Input type='email' name='email' placeholder='Email' />
           <PasswordInput name='password' placeholder='Password' />
 
-          <Button
-            type='primary'
-            htmlType='submit'
-            // loading={loginUserResult.isLoading}
-          >
+          <Button type='primary' htmlType='submit' loading={loginUserResult.isLoading}>
             Enter
           </Button>
         </Form>
