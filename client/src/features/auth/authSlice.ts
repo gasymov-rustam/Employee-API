@@ -42,13 +42,19 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addMatcher(authApi.endpoints.current.matchFulfilled, (state, action) => {
-        if (!action.payload.data) {
-          state.isAuthenticated = false;
-          state.user = null;
+        if (action.payload.data) {
+          state.isAuthenticated = true;
+          const token = localStorage.getItem('token');
+
+          if (token) {
+            const user: UserData = { ...action.payload.data, token };
+            state.user = user;
+          }
+
           return;
         }
 
-        state.isAuthenticated = true;
+        state.isAuthenticated = false;
       });
   },
 });

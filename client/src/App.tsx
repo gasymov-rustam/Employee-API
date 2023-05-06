@@ -1,5 +1,6 @@
 import { ConfigProvider, theme } from 'antd';
 import { BrowserRouter } from './providers';
+import { Auth } from './components';
 
 export const App = () => {
   return (
@@ -8,7 +9,9 @@ export const App = () => {
         algorithm: theme.darkAlgorithm,
       }}
     >
-      <BrowserRouter />
+      <Auth>
+        <BrowserRouter />
+      </Auth>
     </ConfigProvider>
   );
 };
