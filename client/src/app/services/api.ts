@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store';
-import { useDispatch } from 'react-redux';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 
 const baseQuery = fetchBaseQuery({
