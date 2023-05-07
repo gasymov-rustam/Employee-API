@@ -2,6 +2,7 @@ import { apiRequests, methods } from '../constants';
 import { api } from './api';
 
 export interface UserData {
+  id: string;
   name: string;
   email: string;
   token: string;

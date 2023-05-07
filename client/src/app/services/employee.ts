@@ -40,9 +40,8 @@ export const employeesApi = api.injectEndpoints({
     }),
     getEmployee: builder.query<EmployeeUniqueResponse, string>({
       query: (id) => ({
-        url: apiRequests.EMPLOYEE,
+        url: `${apiRequests.EMPLOYEE}/${id}`,
         method: methods.GET,
-        params: { id },
       }),
     }),
     editEmployee: builder.mutation<EmployeeUniqueResponse, Employee>({
@@ -54,9 +53,8 @@ export const employeesApi = api.injectEndpoints({
     }),
     removeEmployee: builder.mutation<EmployeeRemoveResponse, string>({
       query: (id) => ({
-        url: apiRequests.EMPLOYEE_REMOVE,
+        url: `${apiRequests.EMPLOYEE_REMOVE}/${id}`,
         method: methods.DELETE,
-        params: { id },
       }),
     }),
     addEmployee: builder.mutation<EmployeeUniqueResponse, Employee>({

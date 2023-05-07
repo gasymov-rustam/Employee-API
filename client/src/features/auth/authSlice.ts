@@ -25,6 +25,7 @@ const authSlice = createSlice({
       })
       .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
         const user = {
+          id: action.payload.data.id,
           name: action.payload.data.name,
           email: action.payload.data.email,
           token: action.payload.data.token,
@@ -34,6 +35,7 @@ const authSlice = createSlice({
       })
       .addMatcher(authApi.endpoints.register.matchFulfilled, (state, action) => {
         const user = {
+          id: action.payload.data.id,
           name: action.payload.data.name,
           email: action.payload.data.email,
           token: action.payload.data.token,

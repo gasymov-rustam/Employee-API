@@ -85,9 +85,10 @@ const register = async (req, res) => {
 
     const token = sign({ id: user.id }, secret, { expiresIn: '1d' });
 
-    res
-      .status(200)
-      .json({ message: 'Register successful', data: { id: user.id, email: user.email, name: user.name, token } });
+    res.status(200).json({
+      message: 'Register successful',
+      data: { id: user.id, email: user.email, name: user.name, token },
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

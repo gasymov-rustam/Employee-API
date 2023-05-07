@@ -5,9 +5,7 @@ import { EmployeeForm, Layout } from '../../components';
 import { Employee, useEditEmployeeMutation, useGetEmployeeQuery } from '../../app/services/employee';
 import { Paths, isErrorWithMessage } from '../../shared';
 
-interface EditEmployeeProps {}
-
-export const EditEmployee = memo((props: EditEmployeeProps) => {
+export const EditEmployee = memo(() => {
   const navigate = useNavigate();
   const params = useParams<{ id: string }>();
   const [error, setError] = useState('');
@@ -18,13 +16,14 @@ export const EditEmployee = memo((props: EditEmployeeProps) => {
     async (employee: Employee) => {
       try {
         const editedEmployee = {
-          ...data,
+          ...data?.data,
           ...employee,
         };
+        console.log('🚀 => 👍 ==>> EditEmployee ==>> Line #22 ==>> ', editedEmployee);
 
         await editEmployee(editedEmployee).unwrap();
 
-        navigate(`${Paths.STATUS}/created`);
+        navigate(`${Paths.STATUS}/updated`);
       } catch (err) {
         const maybeError = isErrorWithMessage(err);
 
