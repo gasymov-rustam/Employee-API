@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Paths } from '../../shared/router/router';
-import { Home, Login, Register } from '../../pages';
+import { AddEmployee, EditEmployee, Home, Login, Register, Status } from '../../pages';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +14,22 @@ const router = createBrowserRouter([
   {
     path: Paths.REGISTER,
     element: <Register />,
+  },
+  {
+    path: Paths.EMPLOYEE_ADD,
+    element: <AddEmployee />,
+  },
+  // {
+  //   path: `${Paths.EMPLOYEE}/:id`,
+  //   element: <Employee />,
+  // },
+  {
+    path: `${Paths.EMPLOYEE_EDIT}/:id`,
+    element: <EditEmployee />,
+  },
+  {
+    path: `${Paths.STATUS}/:status`,
+    element: <Status />,
   },
 ]);
 

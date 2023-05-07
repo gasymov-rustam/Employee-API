@@ -1,23 +1,31 @@
 import { TeamOutlined, LoginOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Space, Typography } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '../Button';
 
 import cls from './Header.module.css';
 import { Paths } from '../../shared/router/router';
+import { getCurrentUser } from '../../features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { logout } from '../../app/services/api';
+import { useEffect } from 'react';
 
 export const Header = () => {
-  const user = undefined;
-  // const user = useSelector(selectUser);
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const user = useAppSelector(getCurrentUser);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onLogoutClick = () => {
-    // dispatch(logout());
-    // localStorage.removeItem('token');
-    // navigate('/login');
+    logout(dispatch);
+    navigate('/login');
   };
+
+  useEffect(() => {
+    if (!user) {
+      navigate(Paths.LOGIN);
+    }
+  }, [user, navigate]);
 
   return (
     <Layout.Header className={cls.header}>

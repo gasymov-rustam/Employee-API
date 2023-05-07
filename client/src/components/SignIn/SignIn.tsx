@@ -32,8 +32,6 @@ export const SignIn = memo(() => {
         placement: 'bottomRight',
       });
 
-      setError('');
-
       // navigate('/');
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
@@ -58,7 +56,7 @@ export const SignIn = memo(() => {
 
   useEffect(() => {
     if (user) {
-      // navigate('/');
+      navigate('/');
     }
   }, [user, navigate]);
 
