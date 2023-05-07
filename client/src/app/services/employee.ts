@@ -36,6 +36,7 @@ export const employeesApi = api.injectEndpoints({
         url: apiRequests.EMPLOYEES,
         method: methods.GET,
       }),
+      // providesTags: ['EmployeeUniqueResponse'],
     }),
     getEmployee: builder.query<EmployeeUniqueResponse, string>({
       query: (id) => ({
@@ -64,6 +65,9 @@ export const employeesApi = api.injectEndpoints({
         method: methods.POST,
         body: employee,
       }),
+      /** for updating after add, should in general api add tag(array with response type) in get request that you want refetch add
+       * providesTags: ['EmployeeUniqueResponse'](response type) and in after request mutation invalidatesTags: ['EmployeeUniqueResponse'] */
+      // invalidatesTags: ['EmployeeUniqueResponse'],
     }),
   }),
 });

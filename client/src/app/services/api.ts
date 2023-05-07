@@ -19,6 +19,7 @@ const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
 export const api = createApi({
   reducerPath: 'splitApi',
   baseQuery: baseQueryWithRetry,
+  // tagTypes: ['EmployeeUniqueResponse'],
   refetchOnMountOrArgChange: true,
   endpoints: () => ({}),
 });
