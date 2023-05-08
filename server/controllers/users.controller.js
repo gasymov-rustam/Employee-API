@@ -1,13 +1,14 @@
 const { sign } = require('jsonwebtoken');
 const { genSalt, compare, hash } = require('bcrypt');
 const { prisma } = require('../prisma/prisma');
+const { HttpStatusCode, createError } = require('../middleware/errorHandler');
 
 /**
  * @route POST api/user/login
  * @desc Login user
  * @access Public
  */
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -39,7 +40,7 @@ const login = async (req, res) => {
       .status(200)
       .json({ message: 'Login successful', data: { id: user.id, email: user.email, name: user.name, token } });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(createError({ error, statusCode: HttpStatusCode.INTERNAL_SERVER, message: 'Some error from server' }));
   }
 };
 
@@ -48,7 +49,7 @@ const login = async (req, res) => {
  * @desc Register user
  * @access Public
  */
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   try {
     const { email, password, name } = req.body;
 
@@ -90,7 +91,7 @@ const register = async (req, res) => {
       data: { id: user.id, email: user.email, name: user.name, token },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(createError({ error, statusCode: HttpStatusCode.INTERNAL_SERVER, message: 'Some error from server' }));
   }
 };
 
@@ -99,7 +100,7 @@ const register = async (req, res) => {
  * @desc Get Current user
  * @access Private
  */
-const current = async (req, res) => {
+const current = async (req, res, next) => {
   try {
     const user = req.user;
 
@@ -108,7 +109,7 @@ const current = async (req, res) => {
       data: { id: user.id, email: user.email, name: user.name },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(createError({ error, statusCode: HttpStatusCode.INTERNAL_SERVER, message: 'Some error from server' }));
   }
 };
 
